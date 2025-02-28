@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Check if we're running on GitHub Pages
-const isGitHubPages = window.location.hostname !== 'localhost';
+const isGitHubPages = window.location.hostname.includes('github.io');
 
 // Use mock data for GitHub Pages deployment
 const mockRoasts = [

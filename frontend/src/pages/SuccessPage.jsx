@@ -6,8 +6,7 @@ import RoastDisplay from '../components/RoastDisplay';
 import { FaSpinner, FaCopy, FaHome } from 'react-icons/fa';
 
 // Check if we're running on GitHub Pages
-const isGitHubPages = window.location.hostname !== 'localhost';
-
+const isGitHubPages = window.location.hostname.includes('github.io');
 const SuccessPage = () => {
   const [searchParams] = useSearchParams();
   const [roastData, setRoastData] = useState(null);

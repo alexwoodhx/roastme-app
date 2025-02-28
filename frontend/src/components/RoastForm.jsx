@@ -5,7 +5,7 @@ import { generateRoast, createCheckoutSession } from '../services/api';
 import { FaSpinner } from 'react-icons/fa';
 
 // Check if we're running on GitHub Pages
-const isGitHubPages = window.location.hostname !== 'localhost';
+const isGitHubPages = window.location.hostname.includes('github.io');
 
 const RoastForm = () => {
   const [name, setName] = useState('');

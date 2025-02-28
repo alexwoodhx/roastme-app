@@ -3,7 +3,7 @@ import { FaQuoteLeft, FaQuoteRight, FaCrown, FaRegClock, FaShare } from 'react-i
 import { toast } from 'react-hot-toast';
 
 // Check if we're running on GitHub Pages
-const isGitHubPages = window.location.hostname !== 'localhost';
+const isGitHubPages = window.location.hostname.includes('github.io');
 
 const RoastDisplay = ({ roast }) => {
   const { name, roast: roastText, isPremium, createdAt } = roast;

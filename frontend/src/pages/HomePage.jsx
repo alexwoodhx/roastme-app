@@ -3,7 +3,7 @@ import RoastForm from '../components/RoastForm';
 import { FaRobot, FaLaugh, FaLock } from 'react-icons/fa';
 
 // Check if we're running on GitHub Pages
-const isGitHubPages = window.location.hostname !== 'localhost';
+const isGitHubPages = window.location.hostname.includes('github.io');
 
 const HomePage = () => {
   return (
