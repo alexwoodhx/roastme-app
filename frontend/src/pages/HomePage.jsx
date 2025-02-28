@@ -1,59 +1,84 @@
+import React from 'react';
 import RoastForm from '../components/RoastForm';
+import { FaRobot, FaLaugh, FaLock } from 'react-icons/fa';
+
+// Check if we're running on GitHub Pages
+const isGitHubPages = window.location.hostname !== 'localhost';
 
 const HomePage = () => {
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-10">
-        <h1 className="text-4xl font-bold mb-4">
-          Get <span className="text-secondary-600">Roasted</span> by AI
+    <div className="container mx-auto px-4 py-8">
+      <section className="max-w-4xl mx-auto mb-12 text-center">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-purple-800">
+          AI Roast Me
         </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Enter your name and our AI will generate a hilarious, personalized roast just for you. 
-          Want something spicier? Upgrade to our premium roast!
+        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          Get hilariously roasted by our AI. Enter your name, add a photo URL (optional),
+          and let our artificial intelligence create a personalized roast just for you!
         </p>
-      </div>
-      
-      <div className="mb-12">
-        <RoastForm />
-      </div>
-      
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="card text-center">
-          <div className="text-primary-600 mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
-            </svg>
-          </div>
-          <h3 className="text-lg font-bold mb-2">Free Roasts</h3>
-          <p className="text-gray-600">
-            Get a light-hearted, humorous roast completely free. Perfect for a quick laugh!
-          </p>
-        </div>
         
-        <div className="card text-center">
-          <div className="text-secondary-600 mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-          </div>
-          <h3 className="text-lg font-bold mb-2">Premium Roasts</h3>
-          <p className="text-gray-600">
-            Upgrade to our premium roast for a spicier, more creative experience. Only $4.99!
-          </p>
+        <div className="mb-12">
+          <RoastForm />
         </div>
+      </section>
+      
+      <section className="max-w-4xl mx-auto mb-12">
+        <h2 className="text-2xl font-bold mb-6 text-center text-purple-800">
+          How It Works
+        </h2>
         
-        <div className="card text-center">
-          <div className="text-primary-600 mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-            </svg>
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="bg-white rounded-lg shadow-md p-6 text-center">
+            <div className="flex justify-center mb-4">
+              <div className="bg-purple-100 p-3 rounded-full">
+                <FaRobot className="text-3xl text-purple-600" />
+              </div>
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-gray-800">Enter Your Info</h3>
+            <p className="text-gray-600">
+              Provide your name and an optional photo URL for a more personalized roast experience.
+            </p>
           </div>
-          <h3 className="text-lg font-bold mb-2">Share with Friends</h3>
-          <p className="text-gray-600">
-            Easily share your roast on social media and spread the laughter with friends!
-          </p>
+          
+          <div className="bg-white rounded-lg shadow-md p-6 text-center">
+            <div className="flex justify-center mb-4">
+              <div className="bg-purple-100 p-3 rounded-full">
+                <FaLaugh className="text-3xl text-purple-600" />
+              </div>
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-gray-800">Get Roasted</h3>
+            <p className="text-gray-600">
+              Our AI generates a humorous, personalized roast based on the information you provided.
+            </p>
+          </div>
+          
+          <div className="bg-white rounded-lg shadow-md p-6 text-center">
+            <div className="flex justify-center mb-4">
+              <div className="bg-purple-100 p-3 rounded-full">
+                <FaLock className="text-3xl text-purple-600" />
+              </div>
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-gray-800">Share & Enjoy</h3>
+            <p className="text-gray-600">
+              Share your roast with friends or try again for more laughs. It's all in good fun!
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
+      
+      {isGitHubPages && (
+        <section className="max-w-4xl mx-auto mb-12 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+          <h2 className="text-xl font-bold mb-4 text-yellow-800">
+            GitHub Pages Demo
+          </h2>
+          <p className="text-gray-700 mb-2">
+            You're viewing the demo version of AI Roast Me deployed on GitHub Pages. This version uses mock data instead of real API calls.
+          </p>
+          <p className="text-gray-700">
+            For the full experience with real AI-generated roasts, check out the <a href="https://github.com/alexwoodtech/roastme-app" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:text-purple-800 underline">GitHub repository</a> and follow the setup instructions.
+          </p>
+        </section>
+      )}
     </div>
   );
 };

@@ -1,23 +1,36 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaHome, FaSadTear } from 'react-icons/fa';
 
 const NotFoundPage = () => {
+  const navigate = useNavigate();
+
+  const handleGoHome = () => {
+    navigate('/');
+  };
+
   return (
-    <div className="max-w-2xl mx-auto text-center py-12">
-      <div className="mb-6 text-secondary-500">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
+    <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+        <div className="flex justify-center mb-6">
+          <FaSadTear className="text-6xl text-purple-600" />
+        </div>
+        
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">404</h1>
+        <h2 className="text-2xl font-semibold text-gray-700 mb-6">Page Not Found</h2>
+        
+        <p className="text-gray-600 mb-8 max-w-md mx-auto">
+          Oops! The page you're looking for doesn't exist or has been moved.
+          Even our AI is confused by this one.
+        </p>
+        
+        <button
+          onClick={handleGoHome}
+          className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 mx-auto"
+        >
+          <FaHome /> Go Back Home
+        </button>
       </div>
-      
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">404 - Page Not Found</h1>
-      
-      <p className="text-xl text-gray-600 mb-8">
-        Oops! The page you're looking for doesn't exist or has been moved.
-      </p>
-      
-      <Link to="/" className="btn btn-primary">
-        Go back home
-      </Link>
     </div>
   );
 };
