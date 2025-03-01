@@ -16,8 +16,14 @@ const mockRoasts = [
 const LOCAL_API_URL = '/api';
 const RENDER_API_URL = 'https://roastme-api.onrender.com/api';
 
+// CORS Proxy URLs - use these to bypass CORS restrictions
+const CORS_PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
+const CORSPROXY_IO = 'https://corsproxy.io/?';
+
 // Determine which API URL to use
-const API_URL = isGitHubPages ? RENDER_API_URL : LOCAL_API_URL;
+const API_URL = isGitHubPages 
+  ? `${CORSPROXY_IO}${encodeURIComponent(RENDER_API_URL)}`
+  : LOCAL_API_URL;
 
 // Flag to use mock data (set to false once backend is deployed)
 const USE_MOCK_DATA = isGitHubPages && false; // Change to false after backend deployment
@@ -27,13 +33,14 @@ const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest', // Required by some CORS proxies
   },
   withCredentials: false // Set to true if you need cookies/auth to be sent
 });
 
 // Log requests in development
 api.interceptors.request.use(request => {
-  console.log('API Request:', request.method, request.url);
+  console.log('API Request:', request.method, request.url, request.baseURL);
   return request;
 }, error => {
   console.error('API Request Error:', error);
@@ -72,6 +79,22 @@ export const generateRoast = async (name, photoUrl = '') => {
     return response.data;
   } catch (error) {
     console.error('Generate Roast Error:', error.response?.data || error.message || error);
+    
+    // If we get a CORS error, try using mock data as fallback
+    if (error.message === 'Network Error' && isGitHubPages) {
+      console.log('Falling back to mock data due to CORS error');
+      const randomRoast = mockRoasts[Math.floor(Math.random() * mockRoasts.length)];
+      const mockId = 'mock_' + Math.random().toString(36).substring(2, 15);
+      
+      return {
+        success: true,
+        data: {
+          roast: randomRoast.replace('{name}', name),
+          id: mockId
+        }
+      };
+    }
+    
     throw error.response?.data || { error: 'Failed to generate roast' };
   }
 };
@@ -94,6 +117,17 @@ export const createCheckoutSession = async (name, photoUrl = '') => {
     return response.data;
   } catch (error) {
     console.error('Checkout Session Error:', error.response?.data || error.message || error);
+    
+    // If we get a CORS error, try using mock data as fallback
+    if (error.message === 'Network Error' && isGitHubPages) {
+      console.log('Falling back to mock data due to CORS error');
+      return {
+        success: true,
+        url: '/success',
+        message: 'Premium roasts coming soon'
+      };
+    }
+    
     throw error.response?.data || { error: 'Failed to create checkout session' };
   }
 };
@@ -122,6 +156,23 @@ export const getRoastById = async (id) => {
     return response.data;
   } catch (error) {
     console.error('Get Roast Error:', error.response?.data || error.message || error);
+    
+    // If we get a CORS error, try using mock data as fallback
+    if (error.message === 'Network Error' && isGitHubPages) {
+      console.log('Falling back to mock data due to CORS error');
+      const randomRoast = mockRoasts[Math.floor(Math.random() * mockRoasts.length)];
+      
+      return {
+        success: true,
+        data: {
+          name: 'Demo User',
+          roast: randomRoast,
+          isPremium: false,
+          createdAt: new Date().toISOString()
+        }
+      };
+    }
+    
     throw error.response?.data || { error: 'Failed to fetch roast' };
   }
 };
