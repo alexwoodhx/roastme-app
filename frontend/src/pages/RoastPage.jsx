@@ -99,11 +99,14 @@ const RoastPage = () => {
           
           {!roastData?.isPremium && (
             <button
-              onClick={handleGetPremium}
-              className="flex items-center justify-center gap-2 bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
+              disabled={true}
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-gray-400 to-gray-500 text-white font-bold py-3 px-6 rounded-lg transition duration-300 cursor-not-allowed opacity-80"
             >
               <FaFire /> 
-              {isGitHubPages ? 'Try Demo Premium Roast' : 'Get a Spicier Roast ($4.99)'}
+              <span className="flex items-center gap-2">
+                <span>{isGitHubPages ? 'Premium Roast' : 'Spicier Roast'}</span>
+                <span className="text-xs bg-gray-700 text-white px-2 py-1 rounded-full">Coming Soon</span>
+              </span>
             </button>
           )}
         </div>
