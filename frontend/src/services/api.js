@@ -19,8 +19,8 @@ const RENDER_API_URL = 'https://roastme-api.onrender.com/api';
 // Determine which API URL to use
 const API_URL = isGitHubPages ? RENDER_API_URL : LOCAL_API_URL;
 
-// Flag to use mock data (set to false to use real backend)
-const USE_MOCK_DATA = false;
+// Flag to use mock data (set to true if backend is unavailable)
+const USE_MOCK_DATA = isGitHubPages;
 
 // Create axios instance
 const api = axios.create({
@@ -29,12 +29,14 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
   // Don't send credentials for cross-origin requests
-  withCredentials: false
+  withCredentials: false,
+  // Set a timeout to fail fast if the API is not responding
+  timeout: 5000
 });
 
 // Log requests in development
 api.interceptors.request.use(request => {
-  console.log('API Request:', request.method, request.url, request.baseURL);
+  console.log('API Request:', request.method, request.url, 'to', request.baseURL);
   return request;
 }, error => {
   console.error('API Request Error:', error);
@@ -46,13 +48,24 @@ api.interceptors.response.use(response => {
   console.log('API Response:', response.status, response.config.url);
   return response;
 }, error => {
-  console.error('API Response Error:', error.response || error);
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    console.error('API Error Response:', error.response.status, error.response.data);
+  } else if (error.request) {
+    // The request was made but no response was received
+    console.error('API No Response Error:', error.request);
+    console.warn('Backend appears to be unavailable. Using mock data instead.');
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    console.error('API Setup Error:', error.message);
+  }
   return Promise.reject(error);
 });
 
 // Generate a basic roast
 export const generateRoast = async (name, photoUrl = '') => {
-  // If using mock data, return mock response
+  // If using mock data or if we're on GitHub Pages, return mock response
   if (USE_MOCK_DATA) {
     console.log('Using mock data for roast generation');
     // Simulate API delay
@@ -76,7 +89,7 @@ export const generateRoast = async (name, photoUrl = '') => {
     const response = await api.post('/generate-roast', { name, photoUrl });
     return response.data;
   } catch (error) {
-    console.error('Generate Roast Error:', error.response?.data || error.message || error);
+    console.error('Generate Roast Error:', error.message);
     
     // Fallback to mock data on error
     console.log('Falling back to mock data due to API error');
@@ -95,7 +108,7 @@ export const generateRoast = async (name, photoUrl = '') => {
 
 // Create a checkout session for premium roast
 export const createCheckoutSession = async (name, photoUrl = '') => {
-  // If using mock data, return mock response
+  // If using mock data or if we're on GitHub Pages, return mock response
   if (USE_MOCK_DATA) {
     console.log('Using mock data for checkout session');
     // Simulate API delay
@@ -114,7 +127,7 @@ export const createCheckoutSession = async (name, photoUrl = '') => {
     const response = await api.post('/create-checkout-session', { name, photoUrl });
     return response.data;
   } catch (error) {
-    console.error('Checkout Session Error:', error.response?.data || error.message || error);
+    console.error('Checkout Session Error:', error.message);
     
     // Fallback to mock data on error
     console.log('Falling back to mock data due to API error');
@@ -128,7 +141,7 @@ export const createCheckoutSession = async (name, photoUrl = '') => {
 
 // Get a roast by ID
 export const getRoastById = async (id) => {
-  // If using mock data, return mock response
+  // If using mock data or if we're on GitHub Pages, return mock response
   if (USE_MOCK_DATA) {
     console.log('Using mock data for roast retrieval');
     // Simulate API delay
@@ -153,7 +166,7 @@ export const getRoastById = async (id) => {
     const response = await api.get(`/roast/${id}`);
     return response.data;
   } catch (error) {
-    console.error('Get Roast Error:', error.response?.data || error.message || error);
+    console.error('Get Roast Error:', error.message);
     
     // Fallback to mock data on error
     console.log('Falling back to mock data due to API error');
