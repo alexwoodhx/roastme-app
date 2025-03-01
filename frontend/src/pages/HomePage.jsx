@@ -1,6 +1,6 @@
 import React from 'react';
 import RoastForm from '../components/RoastForm';
-import { FaRobot, FaLaugh, FaLock } from 'react-icons/fa';
+import { FaRobot, FaLaugh, FaLock, FaQuestionCircle, FaSmileWink } from 'react-icons/fa';
 
 const HomePage = () => {
   return (
@@ -60,6 +60,20 @@ const HomePage = () => {
               Share your roast with friends or try again for more laughs. It's all in good fun!
             </p>
           </div>
+        </div>
+      </section>
+      
+      <section className="max-w-4xl mx-auto mb-12 text-center">
+        <div className="flex justify-center items-center gap-2 text-sm text-gray-400 hover:text-funky-pink transition-colors">
+          <a 
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 group"
+          >
+            <span className="group-hover:underline">Need help with roasts?</span>
+            <FaSmileWink className="text-lg opacity-70 group-hover:animate-wiggle" />
+          </a>
         </div>
       </section>
     </div>
