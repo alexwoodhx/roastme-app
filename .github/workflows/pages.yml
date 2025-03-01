@@ -36,12 +36,32 @@ jobs:
       - name: Create .nojekyll file
         run: touch frontend/dist/.nojekyll
       
-      - name: Debug - List build output
+      - name: Check for symlinks and file sizes
         run: |
+          echo "Checking for symlinks in frontend/dist:"
+          find frontend/dist -type l -exec ls -la {} \;
+          
+          echo "Checking total size of frontend/dist:"
+          du -sh frontend/dist
+          
+          echo "Checking for large files:"
+          find frontend/dist -type f -size +10M -exec ls -lh {} \;
+          
           echo "Contents of frontend/dist:"
           ls -la frontend/dist
-          echo "Current directory structure:"
-          find . -type d -maxdepth 3 | sort
+      
+      - name: Create clean artifact directory
+        run: |
+          mkdir -p /tmp/clean-artifact
+          echo "Copying files to clean directory (avoiding symlinks):"
+          cp -rL frontend/dist/* /tmp/clean-artifact/
+          cp frontend/dist/.nojekyll /tmp/clean-artifact/ || touch /tmp/clean-artifact/.nojekyll
+          
+          echo "Contents of clean artifact directory:"
+          ls -la /tmp/clean-artifact
+          
+          echo "Size of clean artifact directory:"
+          du -sh /tmp/clean-artifact
       
       - name: Setup Pages
         id: pages
@@ -51,7 +71,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: frontend/dist
+          path: /tmp/clean-artifact
           if-no-files-found: error
       
       - name: Deploy to GitHub Pages
