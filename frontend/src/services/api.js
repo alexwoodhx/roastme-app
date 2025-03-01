@@ -92,7 +92,19 @@ export const generateRoast = async (name, photoUrl = '') => {
     console.log('API_URL is:', API_URL);
     console.log('isGitHubPages:', isGitHubPages);
     
-    const response = await api.post('/generate-roast', { name, photoUrl });
+    // Use the full URL directly instead of relying on axios baseURL
+    const fullUrl = `${API_URL}/generate-roast`;
+    console.log('Making POST request to full URL:', fullUrl);
+    
+    // Make the request with the full URL
+    const response = await axios.post(fullUrl, { name, photoUrl }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: false,
+      timeout: 5000
+    });
+    
     console.log('Real API response received:', response.data);
     return response.data;
   } catch (error) {
