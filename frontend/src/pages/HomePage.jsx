@@ -2,9 +2,6 @@ import React from 'react';
 import RoastForm from '../components/RoastForm';
 import { FaRobot, FaLaugh, FaLock } from 'react-icons/fa';
 
-// Check if we're running on GitHub Pages
-const isGitHubPages = window.location.hostname.includes('github.io');
-
 const HomePage = () => {
   return (
     <div className="container mx-auto px-4 py-8">
@@ -65,20 +62,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      
-      {isGitHubPages && (
-        <section className="max-w-4xl mx-auto mb-12 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-          <h2 className="text-xl font-bold mb-4 text-yellow-800">
-            GitHub Pages Demo
-          </h2>
-          <p className="text-gray-700 mb-2">
-            You're viewing the demo version of AI Roast Me deployed on GitHub Pages. This version uses mock data instead of real API calls.
-          </p>
-          <p className="text-gray-700">
-            For the full experience with real AI-generated roasts, check out the <a href="https://github.com/alexwoodtech/roastme-app" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:text-purple-800 underline">GitHub repository</a> and follow the setup instructions.
-          </p>
-        </section>
-      )}
     </div>
   );
 };
