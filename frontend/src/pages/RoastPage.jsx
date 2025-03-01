@@ -18,24 +18,14 @@ const RoastPage = () => {
   useEffect(() => {
     const fetchRoast = async () => {
       try {
-        // For GitHub Pages deployment, simulate a delay and return mock data
-        if (isGitHubPages) {
-          setTimeout(() => {
-            setRoastData({
-              name: 'Demo User',
-              roast: "Your fashion sense is as outdated as Internet Explorer. But hey, at least you're consistent!",
-              isPremium: false,
-              createdAt: new Date().toISOString()
-            });
-            setLoading(false);
-          }, 1000);
-          return;
-        }
-
-        // For local development with backend
+        console.log('Fetching roast with ID:', id);
+        
+        // Use the API for both GitHub Pages and local development
         const response = await getRoastById(id);
+        console.log('Roast API response:', response);
         
         if (response.success) {
+          console.log('Setting roast data:', response.data);
           setRoastData(response.data);
         } else {
           setError(response.message || 'Failed to fetch roast');
