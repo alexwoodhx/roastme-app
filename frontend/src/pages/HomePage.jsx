@@ -1,6 +1,86 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import RoastForm from '../components/RoastForm';
-import { FaRobot, FaLaugh, FaLock, FaQuestionCircle, FaSmileWink, FaFire } from 'react-icons/fa';
+import { FaRobot, FaLaugh, FaLock, FaQuestionCircle, FaSmileWink, FaFire, FaQuoteLeft, FaQuoteRight, FaStar } from 'react-icons/fa';
+
+// Fake celebrity endorsements component
+const CelebrityEndorsements = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  const endorsements = [
+    {
+      name: "Elon Musk",
+      quote: "I was going to colonize Mars, but then I got roasted so hard I decided to stay on Earth and cry.",
+      title: "CEO of Space or Something"
+    },
+    {
+      name: "Taylor Swift",
+      quote: "I've written 17 breakup songs, but none hit as hard as the roast I got from this AI.",
+      title: "Professional Ex-Girlfriend"
+    },
+    {
+      name: "Gordon Ramsay",
+      quote: "This AI roasts better than I do. It's RAW talent, you donkey!",
+      title: "Angry Chef Man"
+    },
+    {
+      name: "Keanu Reeves",
+      quote: "Getting roasted by this AI was breathtaking... and not in a good way.",
+      title: "The Internet's Boyfriend"
+    },
+    {
+      name: "Beyoncé",
+      quote: "Even I had to put my hands up after this AI roasted me.",
+      title: "Queen B(ee)"
+    },
+    {
+      name: "Dwayne 'The Rock' Johnson",
+      quote: "This AI smelled what I was cooking and told me it was garbage.",
+      title: "Large Muscular Person"
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % endorsements.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  const endorsement = endorsements[currentIndex];
+
+  return (
+    <div className="bg-gradient-to-r from-purple-100 to-pink-100 p-6 rounded-lg shadow-md relative overflow-hidden">
+      <div className="absolute top-2 right-2 flex">
+        {[...Array(5)].map((_, i) => (
+          <FaStar key={i} className="text-yellow-400" />
+        ))}
+      </div>
+      
+      <div className="flex flex-col items-center text-center">
+        <FaQuoteLeft className="text-purple-300 text-4xl mb-4" />
+        
+        <p className="text-lg italic text-gray-700 mb-4">
+          "{endorsement.quote}"
+        </p>
+        
+        <div className="mt-2">
+          <p className="font-bold text-purple-800 text-xl">{endorsement.name}</p>
+          <p className="text-sm text-gray-500">{endorsement.title}</p>
+        </div>
+        
+        <div className="mt-4 flex space-x-2">
+          {endorsements.map((_, index) => (
+            <span 
+              key={index} 
+              className={`h-2 w-2 rounded-full ${index === currentIndex ? 'bg-purple-600' : 'bg-purple-200'}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const HomePage = () => {
   return (
@@ -61,6 +141,13 @@ const HomePage = () => {
             </p>
           </div>
         </div>
+      </section>
+      
+      <section className="max-w-4xl mx-auto mb-12">
+        <h2 className="text-2xl font-bold mb-6 text-center text-purple-800">
+          Celebrity "Endorsements" 🌟
+        </h2>
+        <CelebrityEndorsements />
       </section>
       
       <section className="max-w-4xl mx-auto mb-12 text-center">
