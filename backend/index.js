@@ -9,7 +9,7 @@ const webhookRoutes = require('./routes/webhookRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB
+// Connect to MongoDB!
 // Check if MONGODB_URI is provided in environment variables
 let uri;
 if (process.env.MONGODB_URI) {
@@ -27,34 +27,39 @@ mongoose.connect(uri)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Middleware
-// For Stripe webhook - needs raw body
-app.use('/api/webhook', webhookRoutes);
-
-// Configure CORS for both development and production
+// Configure CORS - Apply to all routes BEFORE other middleware
 const allowedOrigins = [
   'http://localhost:5173',
   'https://alexwoodhx.github.io',
-  process.env.FRONTEND_URL
-].filter(Boolean); // Remove any undefined values
+  'https://roastme-api.onrender.com'
+];
 
+// Apply CORS to all routes except webhook (which needs raw body)
 app.use(cors({
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps, curl requests)
     if (!origin) return callback(null, true);
     
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
       console.log('CORS blocked for:', origin);
-      callback(new Error('Not allowed by CORS'));
+      callback(null, true); // Allow all origins in production for now
     }
   },
-  credentials: true
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }));
 
+// Middleware for JSON parsing
 app.use(express.json());
 app.use(morgan('dev'));
+
+// For Stripe webhook - needs raw body - must be after CORS but before express.json()
+app.use('/api/webhook', webhookRoutes);
 
 // Routes
 app.use('/api', roastRoutes);

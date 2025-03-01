@@ -22,12 +22,31 @@ const API_URL = isGitHubPages ? RENDER_API_URL : LOCAL_API_URL;
 // Flag to use mock data (set to false once backend is deployed)
 const USE_MOCK_DATA = isGitHubPages && false; // Change to false after backend deployment
 
-// Create axios instance
+// Create axios instance with CORS configuration
 const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: false // Set to true if you need cookies/auth to be sent
+});
+
+// Log requests in development
+api.interceptors.request.use(request => {
+  console.log('API Request:', request.method, request.url);
+  return request;
+}, error => {
+  console.error('API Request Error:', error);
+  return Promise.reject(error);
+});
+
+// Log responses in development
+api.interceptors.response.use(response => {
+  console.log('API Response:', response.status, response.config.url);
+  return response;
+}, error => {
+  console.error('API Response Error:', error.response || error);
+  return Promise.reject(error);
 });
 
 // Generate a basic roast
@@ -48,10 +67,11 @@ export const generateRoast = async (name, photoUrl = '') => {
   
   // Otherwise, use the real API
   try {
+    console.log('Generating roast for:', name, 'at URL:', `${API_URL}/generate-roast`);
     const response = await api.post('/generate-roast', { name, photoUrl });
     return response.data;
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('Generate Roast Error:', error.response?.data || error.message || error);
     throw error.response?.data || { error: 'Failed to generate roast' };
   }
 };
@@ -69,10 +89,11 @@ export const createCheckoutSession = async (name, photoUrl = '') => {
   
   // Otherwise, use the real API
   try {
+    console.log('Creating checkout session for:', name);
     const response = await api.post('/create-checkout-session', { name, photoUrl });
     return response.data;
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('Checkout Session Error:', error.response?.data || error.message || error);
     throw error.response?.data || { error: 'Failed to create checkout session' };
   }
 };
@@ -96,10 +117,11 @@ export const getRoastById = async (id) => {
   
   // Otherwise, use the real API
   try {
+    console.log('Getting roast by ID:', id);
     const response = await api.get(`/roast/${id}`);
     return response.data;
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('Get Roast Error:', error.response?.data || error.message || error);
     throw error.response?.data || { error: 'Failed to fetch roast' };
   }
 };
