@@ -69,14 +69,12 @@ const HomePage = () => {
             href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group relative px-6 py-3 overflow-hidden font-medium rounded-lg shadow-md bg-gradient-to-r from-funky-pink to-funky-purple text-white hover:from-funky-purple hover:to-funky-pink transition-all duration-300 transform hover:scale-105"
+            className="group relative inline-flex items-center gap-2 px-6 py-3 overflow-hidden font-medium rounded-lg shadow-md bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:from-purple-600 hover:to-pink-500 transition-all duration-300 transform hover:scale-105"
           >
             <span className="absolute right-0 top-0 bg-white bg-opacity-30 w-8 h-20 -mt-3 rotate-12 transform translate-x-1 -translate-y-3"></span>
-            <span className="flex items-center gap-2">
-              <FaFire className="text-yellow-300 animate-pulse" />
-              <span>Unlock Premium Roast Tips</span>
-              <FaSmileWink className="text-yellow-300 group-hover:animate-wiggle" />
-            </span>
+            <FaFire className="text-yellow-300 animate-pulse" />
+            <span>Unlock Premium Roast Tips</span>
+            <FaSmileWink className="text-yellow-300 group-hover:animate-wiggle" />
           </a>
         </div>
       </section>
