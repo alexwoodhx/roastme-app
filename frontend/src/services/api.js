@@ -69,7 +69,7 @@ api.interceptors.response.use(response => {
 export const generateRoast = async (name, photoUrl = '') => {
   // If using mock data or if we're on GitHub Pages, return mock response
   if (USE_MOCK_DATA) {
-    console.log('Using mock data for roast generation');
+    console.log('Using mock data for roast generation because USE_MOCK_DATA is true');
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 500));
     
@@ -87,11 +87,17 @@ export const generateRoast = async (name, photoUrl = '') => {
   
   // Otherwise, use the real API
   try {
+    console.log('Attempting to use real API for roast generation');
     console.log('Generating roast for:', name, 'at URL:', `${API_URL}/generate-roast`);
+    console.log('API_URL is:', API_URL);
+    console.log('isGitHubPages:', isGitHubPages);
+    
     const response = await api.post('/generate-roast', { name, photoUrl });
+    console.log('Real API response received:', response.data);
     return response.data;
   } catch (error) {
     console.error('Generate Roast Error:', error.message);
+    console.error('Full error object:', error);
     
     // Fallback to mock data on error
     console.log('Falling back to mock data due to API error');
@@ -102,7 +108,8 @@ export const generateRoast = async (name, photoUrl = '') => {
       success: true,
       data: {
         roast: randomRoast.replace('{name}', name || 'you'),
-        id: mockId
+        id: mockId,
+        isMockFallback: true // Flag to indicate this is a fallback
       }
     };
   }
