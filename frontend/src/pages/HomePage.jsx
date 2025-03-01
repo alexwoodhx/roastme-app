@@ -148,6 +148,10 @@ const HomePage = () => {
           Celebrity "Endorsements" 🌟
         </h2>
         <CelebrityEndorsements />
+        <div className="mt-3 text-xs text-gray-400 italic text-center px-4">
+          <p>* Legal Disclaimer: These endorsements are about as real as your ex's promises. If you genuinely believed Elon Musk or Taylor Swift used our app, we have a bridge to sell you and some magic beans for dessert. 🧠🤏</p>
+          <p className="mt-1">Anyone with an IQ exceeding room temperature knows these are jokes. The rest of you might want to check if your village is missing its you-know-what. 😉</p>
+        </div>
       </section>
       
       <section className="max-w-4xl mx-auto mb-12 text-center">
