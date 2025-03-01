@@ -1,6 +1,6 @@
 import React from 'react';
 import RoastForm from '../components/RoastForm';
-import { FaRobot, FaLaugh, FaLock, FaQuestionCircle, FaSmileWink } from 'react-icons/fa';
+import { FaRobot, FaLaugh, FaLock, FaQuestionCircle, FaSmileWink, FaFire } from 'react-icons/fa';
 
 const HomePage = () => {
   return (
@@ -64,15 +64,19 @@ const HomePage = () => {
       </section>
       
       <section className="max-w-4xl mx-auto mb-12 text-center">
-        <div className="flex justify-center items-center gap-2 text-sm text-gray-400 hover:text-funky-pink transition-colors">
+        <div className="inline-block">
           <a 
             href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center gap-1 group"
+            className="group relative px-6 py-3 overflow-hidden font-medium rounded-lg shadow-md bg-gradient-to-r from-funky-pink to-funky-purple text-white hover:from-funky-purple hover:to-funky-pink transition-all duration-300 transform hover:scale-105"
           >
-            <span className="group-hover:underline">Need help with roasts?</span>
-            <FaSmileWink className="text-lg opacity-70 group-hover:animate-wiggle" />
+            <span className="absolute right-0 top-0 bg-white bg-opacity-30 w-8 h-20 -mt-3 rotate-12 transform translate-x-1 -translate-y-3"></span>
+            <span className="flex items-center gap-2">
+              <FaFire className="text-yellow-300 animate-pulse" />
+              <span>Unlock Premium Roast Tips</span>
+              <FaSmileWink className="text-yellow-300 group-hover:animate-wiggle" />
+            </span>
           </a>
         </div>
       </section>
