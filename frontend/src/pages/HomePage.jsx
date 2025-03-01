@@ -105,7 +105,7 @@ const HomePage = () => {
         </h2>
         
         <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white rounded-lg shadow-md p-6 text-center">
+          <div className="bg-white rounded-lg shadow-md p-6 text-center transform hover:rotate-1 transition-transform">
             <div className="flex justify-center mb-4">
               <div className="bg-purple-100 p-3 rounded-full">
                 <FaRobot className="text-3xl text-purple-600" />
@@ -117,7 +117,7 @@ const HomePage = () => {
             </p>
           </div>
           
-          <div className="bg-white rounded-lg shadow-md p-6 text-center">
+          <div className="bg-white rounded-lg shadow-md p-6 text-center transform hover:rotate-1 transition-transform">
             <div className="flex justify-center mb-4">
               <div className="bg-purple-100 p-3 rounded-full">
                 <FaLaugh className="text-3xl text-purple-600" />
@@ -129,7 +129,7 @@ const HomePage = () => {
             </p>
           </div>
           
-          <div className="bg-white rounded-lg shadow-md p-6 text-center">
+          <div className="bg-white rounded-lg shadow-md p-6 text-center transform hover:rotate-1 transition-transform">
             <div className="flex justify-center mb-4">
               <div className="bg-purple-100 p-3 rounded-full">
                 <FaLock className="text-3xl text-purple-600" />
@@ -160,7 +160,7 @@ const HomePage = () => {
             href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-2 px-6 py-3 overflow-hidden font-medium rounded-lg shadow-md bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:from-purple-600 hover:to-pink-500 transition-all duration-300 transform hover:scale-105"
+            className="group relative inline-flex items-center gap-2 px-6 py-3 overflow-hidden font-medium rounded-lg shadow-md bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:from-purple-600 hover:to-pink-500 transition-all duration-300 transform hover:scale-105 btn-bounce"
           >
             <span className="absolute right-0 top-0 bg-white bg-opacity-30 w-8 h-20 -mt-3 rotate-12 transform translate-x-1 -translate-y-3"></span>
             <FaFire className="text-yellow-300 animate-pulse" />
@@ -171,11 +171,16 @@ const HomePage = () => {
       </section>
       
       <section className="max-w-4xl mx-auto mb-12 text-center">
-        <p className="text-lg text-gray-600">
-          Ready to get absolutely destroyed? 💥 Our AI doesn't hold back! 🙈
-        </p>
+        <div className="speech-bubble mb-6">
+          <p className="text-lg text-gray-600 font-bold">
+            Ready to get absolutely destroyed? 💥 Our AI doesn't hold back! 🙈
+          </p>
+        </div>
         <p className="text-md text-gray-500 mt-4">
           Remember: These roasts are AI-generated and meant to be funny 🤪 Don't take them personally! 💖
+        </p>
+        <p className="mt-4 text-sm text-purple-600 glitch-text">
+          Warning: Side effects may include bruised egos, uncontrollable laughter, and the sudden urge to question your life choices.
         </p>
       </section>
     </div>
