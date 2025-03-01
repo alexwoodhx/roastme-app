@@ -3,7 +3,7 @@ import axios from 'axios';
 // Check if we're running on GitHub Pages
 const isGitHubPages = window.location.hostname.includes('github.io');
 
-// Use mock data for GitHub Pages deployment
+// Use mock data for GitHub Pages deployment if no backend is available
 const mockRoasts = [
   "Your fashion sense is as outdated as Internet Explorer. But hey, at least you're consistent!",
   "You're like a human version of Monday morning - nobody's excited to see you, but they tolerate your existence.",
@@ -12,10 +12,17 @@ const mockRoasts = [
   "Your selfies make the camera want to switch to the front-facing camera automatically."
 ];
 
-// API URL - use relative path for local development, mock for GitHub Pages
-const API_URL = isGitHubPages ? null : '/api';
+// API URLs
+const LOCAL_API_URL = '/api';
+const RENDER_API_URL = 'https://roastme-api.onrender.com/api';
 
-// Create axios instance for local development
+// Determine which API URL to use
+const API_URL = isGitHubPages ? RENDER_API_URL : LOCAL_API_URL;
+
+// Flag to use mock data (set to false once backend is deployed)
+const USE_MOCK_DATA = isGitHubPages && false; // Change to false after backend deployment
+
+// Create axios instance
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -25,8 +32,8 @@ const api = axios.create({
 
 // Generate a basic roast
 export const generateRoast = async (name, photoUrl = '') => {
-  // If on GitHub Pages, return mock data
-  if (isGitHubPages) {
+  // If using mock data, return mock response
+  if (USE_MOCK_DATA) {
     const randomRoast = mockRoasts[Math.floor(Math.random() * mockRoasts.length)];
     const mockId = 'mock_' + Math.random().toString(36).substring(2, 15);
     
@@ -44,14 +51,15 @@ export const generateRoast = async (name, photoUrl = '') => {
     const response = await api.post('/generate-roast', { name, photoUrl });
     return response.data;
   } catch (error) {
+    console.error('API Error:', error);
     throw error.response?.data || { error: 'Failed to generate roast' };
   }
 };
 
 // Create a checkout session for premium roast
 export const createCheckoutSession = async (name, photoUrl = '') => {
-  // If on GitHub Pages, return mock data
-  if (isGitHubPages) {
+  // If using mock data, return mock response
+  if (USE_MOCK_DATA) {
     return {
       success: true,
       url: '/success',
@@ -64,14 +72,15 @@ export const createCheckoutSession = async (name, photoUrl = '') => {
     const response = await api.post('/create-checkout-session', { name, photoUrl });
     return response.data;
   } catch (error) {
+    console.error('API Error:', error);
     throw error.response?.data || { error: 'Failed to create checkout session' };
   }
 };
 
 // Get a roast by ID
 export const getRoastById = async (id) => {
-  // If on GitHub Pages, return mock data
-  if (isGitHubPages) {
+  // If using mock data, return mock response
+  if (USE_MOCK_DATA) {
     const randomRoast = mockRoasts[Math.floor(Math.random() * mockRoasts.length)];
     
     return {
@@ -90,6 +99,7 @@ export const getRoastById = async (id) => {
     const response = await api.get(`/roast/${id}`);
     return response.data;
   } catch (error) {
+    console.error('API Error:', error);
     throw error.response?.data || { error: 'Failed to fetch roast' };
   }
 };
