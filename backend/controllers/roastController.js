@@ -30,17 +30,17 @@ exports.generateRoast = async (req, res) => {
     
     // Use OpenAI if available, otherwise use mock data
     if (openai) {
-      // Generate roast using OpenAI with more savage prompt
-      const prompt = `Write a savage, brutal roast for someone named ${name}. Don't hold back - make it genuinely cutting and hilarious. Include specific personal attacks about their appearance, personality, or life choices. Aim to make people laugh but also wince. Limit to 3-4 sentences.`;
+      // Generate roast using OpenAI with more adult-oriented prompt
+      const prompt = `Write a savage, brutal roast for someone named ${name}. Don't hold back - make it genuinely cutting, explicit, and hilarious. Include specific personal attacks about their appearance, personality, or life choices. Feel free to use adult language and references that would be appropriate for an R-rated comedy club. Aim to make people laugh but also wince. Limit to 3-4 sentences.`;
       
       const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
-          { role: "system", content: "You are a ruthless roast comedian like Jeff Ross or Anthony Jeselnik who specializes in brutal, savage takedowns. Your roasts are cutting, specific, and sometimes shocking, but always funny. Don't be generic - be creative and specific with your insults." },
+          { role: "system", content: "You are a ruthless, uncensored roast comedian like Jeff Ross, Anthony Jeselnik, or Dave Attell who specializes in brutal, savage takedowns with adult humor. Your roasts are cutting, specific, sometimes shocking, and use explicit language when appropriate. Don't be generic - be creative and specific with your insults. You can reference adult topics and use strong language, similar to what would be acceptable in an R-rated comedy special." },
           { role: "user", content: prompt }
         ],
         max_tokens: 150,
-        temperature: 0.9, // Higher temperature for more creative and unpredictable outputs
+        temperature: 1.0, // Maximum temperature for most creative and unpredictable outputs
       });
 
       roastContent = completion.choices[0].message.content.trim();
@@ -89,13 +89,13 @@ exports.generatePremiumRoast = async (req, res) => {
     
     // Use OpenAI if available, otherwise use mock data
     if (openai) {
-      // Generate premium roast using OpenAI with even more savage prompt
-      const prompt = `Write an absolutely brutal, no-holds-barred roast for someone named ${name}. Make it the most savage, cutting roast possible - the kind that would make a comedy club audience gasp before laughing. Be creative, specific, and ruthless. Limit to 4-5 sentences but make every word count.`;
+      // Generate premium roast using OpenAI with even more explicit prompt
+      const prompt = `Write an absolutely brutal, no-holds-barred, explicit roast for someone named ${name}. Make it the most savage, cutting roast possible - the kind that would make a comedy club audience gasp before laughing. Be creative, specific, and ruthless. Use adult language and references freely, as if this were for an uncensored comedy special. Limit to 4-5 sentences but make every word count.`;
       
       const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",  // Using GPT-3.5-Turbo instead of GPT-4 to save costs
         messages: [
-          { role: "system", content: "You are the most savage roast comedian in the world, combining the brutal honesty of Anthony Jeselnik with the creative insults of Jeff Ross and the shock value of Dave Attell. Your roasts are legendary for being both hilarious and devastatingly personal. You never use generic insults - you craft specific, creative takedowns that hit where it hurts while still being funny." },
+          { role: "system", content: "You are the most savage, uncensored roast comedian in the world, combining the brutal honesty of Anthony Jeselnik with the creative insults of Jeff Ross and the explicit shock value of Dave Attell. Your roasts are legendary for being both hilarious and devastatingly personal, with no topic off-limits. You never use generic insults - you craft specific, creative takedowns that hit where it hurts while still being funny. You freely use explicit language and adult references when it makes the roast more impactful, similar to what would be acceptable in an uncensored comedy special." },
           { role: "user", content: prompt }
         ],
         max_tokens: 200,
@@ -256,17 +256,17 @@ exports.handleWebhook = async (req, res) => {
       let roastContent;
       
       if (openai) {
-        // Use OpenAI if available
-        const prompt = `Write a hilarious, spicy roast for someone named ${name}. Make it more creative and edgy than a standard roast, but still keep it in good fun. Limit to 4-5 sentences.`;
+        // Use OpenAI if available with more explicit prompt
+        const prompt = `Write an absolutely brutal, no-holds-barred, explicit roast for someone named ${name}. Make it the most savage, cutting roast possible - the kind that would make a comedy club audience gasp before laughing. Be creative, specific, and ruthless. Use adult language and references freely, as if this were for an uncensored comedy special. Limit to 4-5 sentences but make every word count.`;
         
         const completion = await openai.chat.completions.create({
           model: "gpt-3.5-turbo", // Using GPT-3.5-Turbo instead of GPT-4 to save costs
           messages: [
-            { role: "system", content: "You are a professional roast comedian who specializes in clever, edgy humor. Make your roasts spicy and creative, but still in good fun." },
+            { role: "system", content: "You are the most savage, uncensored roast comedian in the world, combining the brutal honesty of Anthony Jeselnik with the creative insults of Jeff Ross and the explicit shock value of Dave Attell. Your roasts are legendary for being both hilarious and devastatingly personal, with no topic off-limits. You never use generic insults - you craft specific, creative takedowns that hit where it hurts while still being funny. You freely use explicit language and adult references when it makes the roast more impactful, similar to what would be acceptable in an uncensored comedy special." },
             { role: "user", content: prompt }
           ],
           max_tokens: 200,
-          temperature: 0.9, // Slightly higher temperature for more creative outputs
+          temperature: 1.0, // Maximum temperature for most creative and unpredictable outputs
         });
     
         roastContent = completion.choices[0].message.content.trim();
