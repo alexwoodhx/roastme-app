@@ -22,9 +22,9 @@ const API_URL = isGitHubPages ? RENDER_API_URL : LOCAL_API_URL;
 // Flag to use mock data (set to false to use real backend)
 const USE_MOCK_DATA = false;
 
-// Create axios instance
+// Create axios instance with dynamic baseURL to avoid caching issues
 const api = axios.create({
-  baseURL: API_URL,
+  // Don't set baseURL here, we'll set it on each request
   headers: {
     'Content-Type': 'application/json',
   },
@@ -36,6 +36,8 @@ const api = axios.create({
 
 // Log requests in development
 api.interceptors.request.use(request => {
+  // Set the baseURL dynamically on each request to avoid caching issues
+  request.baseURL = API_URL;
   console.log('API Request:', request.method, request.url, 'to', request.baseURL);
   return request;
 }, error => {
