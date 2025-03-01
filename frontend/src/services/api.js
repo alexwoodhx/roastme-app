@@ -14,13 +14,13 @@ const mockRoasts = [
 
 // API URLs
 const LOCAL_API_URL = '/api';
-const RENDER_API_URL = 'https://roastme-api.onrender.com/api';
+const RENDER_API_URL = 'https://roastme-app.onrender.com/api';
 
 // Determine which API URL to use
 const API_URL = isGitHubPages ? RENDER_API_URL : LOCAL_API_URL;
 
-// Flag to use mock data (set to true if backend is unavailable)
-const USE_MOCK_DATA = isGitHubPages;
+// Flag to use mock data (set to false to use real backend)
+const USE_MOCK_DATA = false;
 
 // Create axios instance
 const api = axios.create({
