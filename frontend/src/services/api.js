@@ -16,21 +16,25 @@ const mockRoasts = [
 const LOCAL_API_URL = '/api';
 const RENDER_API_URL = 'https://roastme-api.onrender.com/api';
 
-// For GitHub Pages deployment, just use mock data for now
-// This is the most reliable solution until we can properly configure CORS
-const USE_MOCK_DATA = isGitHubPages ? true : false;
+// Determine which API URL to use
+const API_URL = isGitHubPages ? RENDER_API_URL : LOCAL_API_URL;
 
-// Create axios instance for local development
+// Flag to use mock data (set to false to use real backend)
+const USE_MOCK_DATA = false;
+
+// Create axios instance
 const api = axios.create({
-  baseURL: LOCAL_API_URL,
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
-  }
+  },
+  // Don't send credentials for cross-origin requests
+  withCredentials: false
 });
 
 // Log requests in development
 api.interceptors.request.use(request => {
-  console.log('API Request:', request.method, request.url);
+  console.log('API Request:', request.method, request.url, request.baseURL);
   return request;
 }, error => {
   console.error('API Request Error:', error);
@@ -68,6 +72,7 @@ export const generateRoast = async (name, photoUrl = '') => {
   
   // Otherwise, use the real API
   try {
+    console.log('Generating roast for:', name, 'at URL:', `${API_URL}/generate-roast`);
     const response = await api.post('/generate-roast', { name, photoUrl });
     return response.data;
   } catch (error) {
@@ -105,6 +110,7 @@ export const createCheckoutSession = async (name, photoUrl = '') => {
   
   // Otherwise, use the real API
   try {
+    console.log('Creating checkout session for:', name);
     const response = await api.post('/create-checkout-session', { name, photoUrl });
     return response.data;
   } catch (error) {
@@ -143,6 +149,7 @@ export const getRoastById = async (id) => {
   
   // Otherwise, use the real API
   try {
+    console.log('Getting roast by ID:', id);
     const response = await api.get(`/roast/${id}`);
     return response.data;
   } catch (error) {
