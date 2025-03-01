@@ -1,8 +1,8 @@
-name: GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -15,66 +15,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
-      - name: Setup Node.js
+      - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
-      
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
       - name: Install dependencies
         run: cd frontend && npm ci
-      
       - name: Build
         run: cd frontend && npm run build
-      
       - name: Create .nojekyll file
         run: touch frontend/dist/.nojekyll
-      
-      - name: Check for symlinks and file sizes
+      - name: Debug info
         run: |
-          echo "Checking for symlinks in frontend/dist:"
-          find frontend/dist -type l -exec ls -la {} \;
-          
-          echo "Checking total size of frontend/dist:"
-          du -sh frontend/dist
-          
-          echo "Checking for large files:"
-          find frontend/dist -type f -size +10M -exec ls -lh {} \;
-          
           echo "Contents of frontend/dist:"
           ls -la frontend/dist
-      
-      - name: Create clean artifact directory
-        run: |
-          mkdir -p /tmp/clean-artifact
-          echo "Copying files to clean directory (avoiding symlinks):"
-          cp -rL frontend/dist/* /tmp/clean-artifact/
-          cp frontend/dist/.nojekyll /tmp/clean-artifact/ || touch /tmp/clean-artifact/.nojekyll
-          
-          echo "Contents of clean artifact directory:"
-          ls -la /tmp/clean-artifact
-          
-          echo "Size of clean artifact directory:"
-          du -sh /tmp/clean-artifact
-      
+          echo "Total size:"
+          du -sh frontend/dist
       - name: Setup Pages
-        id: pages
         uses: actions/configure-pages@v4
-      
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v4
         with:
-          name: github-pages
-          path: /tmp/clean-artifact
-          if-no-files-found: error
-      
+          path: 'frontend/dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
-        with:
-          artifact_name: github-pages 
+        id: deployment
+        uses: actions/deploy-pages@v4 
