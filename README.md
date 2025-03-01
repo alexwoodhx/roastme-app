@@ -1,104 +1,61 @@
 # AI Roast Me App
 
-A full-stack application that generates humorous AI-powered roasts based on user input. Users can get free basic roasts or pay for premium "spicier" roasts using Stripe integration.
+A fun application that generates humorous roasts using AI.
+
+## Live Demo
+
+Check out the live demo at [https://alexwoodhx.github.io/roastme-app/](https://alexwoodhx.github.io/roastme-app/)
 
 ## Features
 
-- AI-generated roasts using OpenAI's GPT
-- User input for name and optional photo upload
-- Free basic roasts and premium paid roasts
-- Social media sharing
-- Stripe payment integration
-- MongoDB for tracking roast requests
+- Generate basic roasts for free
+- Premium roasts with more personalized content (coming soon)
+- Upload a photo for even more personalized roasts (coming soon)
 
-## Tech Stack
-
-### Backend
-- Node.js
-- Express
-- OpenAI API
-- MongoDB (for tracking)
-- Stripe (for payments)
+## Technical Details
 
 ### Frontend
-- React (Vite)
-- Axios for API calls
-- TailwindCSS for styling
 
-### Deployment
-- Vercel (frontend)
-- Render/Fly.io (backend)
-- MongoDB Atlas
+- React.js with Vite
+- Deployed on GitHub Pages
+- Responsive design for mobile and desktop
 
-## Project Structure
+### Backend
 
-```
-roastme-app/
-├── backend/  # Express API
-│   ├── index.js
-│   ├── routes/
-│   ├── models/
-│   ├── controllers/
-│   ├── .env
-│   ├── package.json
-├── frontend/  # React App
-│   ├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── App.jsx
-│   ├── package.json
-├── package.json (root, for running both frontend/backend together)
-├── README.md
-```
+- Node.js with Express
+- MongoDB for data storage
+- OpenAI API for generating roasts
+- Stripe for payment processing
+- Deployed on Render
 
-## Setup Instructions
+## Development Status
+
+- **Frontend**: Fully deployed on GitHub Pages
+- **Backend**: Deployed on Render
+- **Current Limitation**: The GitHub Pages deployment currently uses mock data due to CORS restrictions between GitHub Pages and the Render backend. The full functionality with real AI-generated roasts is available when running locally.
+
+## Running Locally
 
 1. Clone the repository
+2. Install dependencies:
    ```
-   git clone https://github.com/yourusername/roastme-app.git
-   cd roastme-app
+   cd frontend && npm install
+   cd ../backend && npm install
    ```
-
-2. Install dependencies
+3. Set up environment variables in `backend/.env`
+4. Start the backend:
    ```
-   npm run install:all
+   cd backend && npm start
    ```
-
-3. Set up environment variables
-   - Create a `.env` file in the backend directory with the following variables:
-     ```
-     PORT=5000
-     MONGODB_URI=your_mongodb_connection_string
-     OPENAI_API_KEY=your_openai_api_key
-     STRIPE_SECRET_KEY=your_stripe_secret_key
-     STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
-     FRONTEND_URL=http://localhost:5173
-     ```
-
-4. Start the development servers
+5. Start the frontend:
    ```
-   npm start
+   cd frontend && npm run dev
    ```
+6. Open [http://localhost:5173](http://localhost:5173) in your browser
 
-5. Access the application
-   - Frontend: http://localhost:5173
-   - Backend API: http://localhost:5000
+## Future Improvements
 
-## Deployment
-
-### Frontend (Vercel)
-1. Connect your GitHub repository to Vercel
-2. Set the root directory to `frontend`
-3. Set the build command to `npm run build`
-4. Set the output directory to `dist`
-
-### Backend (Render/Fly.io)
-1. Connect your GitHub repository
-2. Set the root directory to `backend`
-3. Set the build command to `npm install`
-4. Set the start command to `npm start`
-5. Add the environment variables from your `.env` file
-
-## License
-
-MIT
+- Resolve CORS issues between GitHub Pages and Render backend
+- Implement premium roast features
+- Add photo upload functionality
+- Enhance UI/UX with animations and transitions
