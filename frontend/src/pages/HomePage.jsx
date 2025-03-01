@@ -65,15 +65,17 @@ const HomePage = () => {
       
       <section className="max-w-4xl mx-auto mb-12 text-center">
         <div className="inline-block">
-          <div 
-            className="group relative inline-flex items-center gap-2 px-6 py-3 overflow-hidden font-medium rounded-lg shadow-md bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed opacity-80"
+          <a 
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="group relative inline-flex items-center gap-2 px-6 py-3 overflow-hidden font-medium rounded-lg shadow-md bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:from-purple-600 hover:to-pink-500 transition-all duration-300 transform hover:scale-105"
           >
             <span className="absolute right-0 top-0 bg-white bg-opacity-30 w-8 h-20 -mt-3 rotate-12 transform translate-x-1 -translate-y-3"></span>
-            <FaFire className="text-yellow-300" />
-            <span>Premium Roast Tips</span>
-            <span className="ml-1 text-xs bg-gray-700 text-white px-2 py-1 rounded-full">Coming Soon</span>
-            <FaSmileWink className="text-yellow-300" />
-          </div>
+            <FaFire className="text-yellow-300 animate-pulse" />
+            <span>Unlock Premium Roast Tips</span>
+            <FaSmileWink className="text-yellow-300 group-hover:animate-wiggle" />
+          </a>
         </div>
       </section>
     </div>

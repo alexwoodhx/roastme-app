@@ -133,11 +133,14 @@ const RoastForm = () => {
           <button
             type="button"
             onClick={handlePremiumRoast}
-            className="flex-1 bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 flex justify-center items-center"
-            disabled={loading}
+            className="flex-1 bg-gradient-to-r from-gray-400 to-gray-500 text-white font-bold py-3 px-6 rounded-lg transition duration-300 flex justify-center items-center cursor-not-allowed opacity-80"
+            disabled={true}
           >
             {loading ? <FaSpinner className="animate-spin mr-2" /> : null}
-            {isGitHubPages ? 'Try Demo Premium Roast' : 'Get a Spicier Roast ($4.99)'}
+            <span className="flex items-center gap-2">
+              <span>{isGitHubPages ? 'Premium Roast' : 'Spicier Roast'}</span>
+              <span className="text-xs bg-gray-700 text-white px-2 py-1 rounded-full">Coming Soon</span>
+            </span>
           </button>
         </div>
       </form>
