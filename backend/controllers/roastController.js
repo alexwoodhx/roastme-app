@@ -30,13 +30,13 @@ exports.generateRoast = async (req, res) => {
     
     // Use OpenAI if available, otherwise use mock data
     if (openai) {
-      // Generate roast using OpenAI with UK-oriented prompt
-      const prompt = `Write a savage, brutal roast for someone named ${name}. Don't hold back - make it genuinely cutting, explicit, and hilarious with a British sensibility. Include specific personal attacks about their appearance, personality, or life choices. Use British spelling, slang, and cultural references where appropriate. Aim for dry wit, sarcasm, and self-deprecating humour in the style of British comedy. Limit to 3-4 sentences.`;
+      // Generate roast using OpenAI with subtle UK sensibility
+      const prompt = `Write a savage, brutal roast for someone named ${name}. Don't hold back - make it genuinely cutting, explicit, and hilarious. Include specific personal attacks about their appearance, personality, or life choices. Use UK spelling and a dry, sarcastic tone. Aim to make people laugh but also wince. Limit to 3-4 sentences.`;
       
       const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
-          { role: "system", content: "You are a ruthless, uncensored British roast comedian like Jimmy Carr, Frankie Boyle, or Ricky Gervais who specialises in brutal, savage takedowns with adult humour. Your roasts are cutting, specific, sometimes shocking, and use explicit language when appropriate. Don't be generic - be creative and specific with your insults. You can reference adult topics and use strong language, similar to what would be acceptable on a British panel show like '8 Out of 10 Cats' or 'Mock the Week'. Use British spelling and terminology." },
+          { role: "system", content: "You are a ruthless, uncensored roast comedian who specialises in brutal, savage takedowns with adult humour. Your roasts are cutting, specific, sometimes shocking, and use explicit language when appropriate. Don't be generic - be creative and specific with your insults. You can reference adult topics and use strong language. Use UK spelling but avoid forced British cultural references or stereotypes." },
           { role: "user", content: prompt }
         ],
         max_tokens: 150,
@@ -89,13 +89,13 @@ exports.generatePremiumRoast = async (req, res) => {
     
     // Use OpenAI if available, otherwise use mock data
     if (openai) {
-      // Generate premium roast using OpenAI with UK-oriented prompt
-      const prompt = `Write an absolutely brutal, no-holds-barred, explicit roast for someone named ${name} in the style of British comedy. Make it the most savage, cutting roast possible - the kind that would make a comedy club audience in London gasp before laughing. Be creative, specific, and ruthless with dry British wit. Use British spelling, slang, and cultural references where appropriate. Feel free to include adult language and references in the style of British panel shows. Limit to 4-5 sentences but make every word count.`;
+      // Generate premium roast using OpenAI with subtle UK sensibility
+      const prompt = `Write an absolutely brutal, no-holds-barred, explicit roast for someone named ${name}. Make it the most savage, cutting roast possible - the kind that would make a comedy club audience gasp before laughing. Be creative, specific, and ruthless with dry wit and sarcasm. Use UK spelling and phrasing. Feel free to include adult language and references. Limit to 4-5 sentences but make every word count.`;
       
       const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",  // Using GPT-3.5-Turbo instead of GPT-4 to save costs
         messages: [
-          { role: "system", content: "You are the most savage, uncensored British roast comedian in the world, combining the brutal honesty of Frankie Boyle with the clever insults of Jimmy Carr and the cutting wit of Ricky Gervais. Your roasts are legendary for being both hilarious and devastatingly personal, with no topic off-limits. You never use generic insults - you craft specific, creative takedowns that hit where it hurts while still being funny. You freely use explicit language and adult references when it makes the roast more impactful, similar to what would be acceptable on British TV after the watershed. Use British spelling, slang, and cultural references." },
+          { role: "system", content: "You are the most savage, uncensored roast comedian in the world. Your roasts are legendary for being both hilarious and devastatingly personal, with no topic off-limits. You never use generic insults - you craft specific, creative takedowns that hit where it hurts while still being funny. You freely use explicit language and adult references when it makes the roast more impactful. Use UK spelling but avoid forced cultural references or stereotypes." },
           { role: "user", content: prompt }
         ],
         max_tokens: 200,
@@ -256,13 +256,13 @@ exports.handleWebhook = async (req, res) => {
       let roastContent;
       
       if (openai) {
-        // Use OpenAI if available with UK-oriented prompt
-        const prompt = `Write an absolutely brutal, no-holds-barred, explicit roast for someone named ${name} in the style of British comedy. Make it the most savage, cutting roast possible - the kind that would make a comedy club audience in London gasp before laughing. Be creative, specific, and ruthless with dry British wit. Use British spelling, slang, and cultural references where appropriate. Feel free to include adult language and references in the style of British panel shows. Limit to 4-5 sentences but make every word count.`;
+        // Use OpenAI if available with subtle UK sensibility
+        const prompt = `Write an absolutely brutal, no-holds-barred, explicit roast for someone named ${name}. Make it the most savage, cutting roast possible - the kind that would make a comedy club audience gasp before laughing. Be creative, specific, and ruthless with dry wit and sarcasm. Use UK spelling and phrasing. Feel free to include adult language and references. Limit to 4-5 sentences but make every word count.`;
         
         const completion = await openai.chat.completions.create({
           model: "gpt-3.5-turbo", // Using GPT-3.5-Turbo instead of GPT-4 to save costs
           messages: [
-            { role: "system", content: "You are the most savage, uncensored British roast comedian in the world, combining the brutal honesty of Frankie Boyle with the clever insults of Jimmy Carr and the cutting wit of Ricky Gervais. Your roasts are legendary for being both hilarious and devastatingly personal, with no topic off-limits. You never use generic insults - you craft specific, creative takedowns that hit where it hurts while still being funny. You freely use explicit language and adult references when it makes the roast more impactful, similar to what would be acceptable on British TV after the watershed. Use British spelling, slang, and cultural references." },
+            { role: "system", content: "You are the most savage, uncensored roast comedian in the world. Your roasts are legendary for being both hilarious and devastatingly personal, with no topic off-limits. You never use generic insults - you craft specific, creative takedowns that hit where it hurts while still being funny. You freely use explicit language and adult references when it makes the roast more impactful. Use UK spelling but avoid forced cultural references or stereotypes." },
             { role: "user", content: prompt }
           ],
           max_tokens: 200,
