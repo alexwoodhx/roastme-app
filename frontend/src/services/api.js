@@ -145,7 +145,20 @@ export const createCheckoutSession = async (name, photoUrl = '') => {
   // Otherwise, use the real API
   try {
     console.log('Creating checkout session for:', name);
-    const response = await api.post('/create-checkout-session', { name, photoUrl });
+    
+    // Use the full URL directly instead of relying on axios baseURL
+    const fullUrl = `${API_URL}/create-checkout-session`;
+    console.log('Making POST request to full URL:', fullUrl);
+    
+    // Make the request with the full URL
+    const response = await axios.post(fullUrl, { name, photoUrl }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: false,
+      timeout: 5000
+    });
+    
     return response.data;
   } catch (error) {
     console.error('Checkout Session Error:', error.message);
@@ -184,7 +197,20 @@ export const getRoastById = async (id) => {
   // Otherwise, use the real API
   try {
     console.log('Getting roast by ID:', id);
-    const response = await api.get(`/roast/${id}`);
+    
+    // Use the full URL directly instead of relying on axios baseURL
+    const fullUrl = `${API_URL}/roast/${id}`;
+    console.log('Making GET request to full URL:', fullUrl);
+    
+    // Make the request with the full URL
+    const response = await axios.get(fullUrl, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: false,
+      timeout: 5000
+    });
+    
     return response.data;
   } catch (error) {
     console.error('Get Roast Error:', error.message);
