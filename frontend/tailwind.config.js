@@ -33,9 +33,32 @@ export default {
           900: '#701a75',
           950: '#4a044e',
         },
+        funky: {
+          pink: '#FF6B9E',
+          yellow: '#FFDE59',
+          purple: '#9D4EDD',
+          blue: '#00C2FF',
+          green: '#00F5A0',
+        },
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Comic Neue', 'sans-serif'],
+        comic: ['Comic Neue', 'cursive'],
+        bangers: ['Bangers', 'cursive'],
+      },
+      animation: {
+        wiggle: 'wiggle 1s ease-in-out infinite',
+        float: 'float 3s ease-in-out infinite',
+      },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
       },
     },
   },
