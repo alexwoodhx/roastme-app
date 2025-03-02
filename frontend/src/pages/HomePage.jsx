@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import RoastForm from '../components/RoastForm';
 import { FaRobot, FaLaugh, FaLock, FaQuestionCircle, FaSmileWink, FaFire, FaQuoteLeft, FaQuoteRight, FaStar } from 'react-icons/fa';
+import { generateRoast, createCheckoutSession } from '../services/api';
 
 // Fake celebrity endorsements component
 const CelebrityEndorsements = () => {
@@ -83,6 +86,47 @@ const CelebrityEndorsements = () => {
 };
 
 const HomePage = () => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (formData) => {
+    try {
+      setLoading(true);
+      
+      if (formData.isPremium) {
+        // Handle premium roast (redirects to Stripe)
+        const response = await createCheckoutSession(formData.name, formData.photoUrl);
+        
+        if (response.success && response.url) {
+          // For GitHub Pages demo, redirect to success page with mock session ID
+          if (window.location.hostname.includes('github.io')) {
+            navigate(`/success?session_id=mock_sess_${Date.now()}`);
+            return;
+          }
+          
+          // For production, redirect to Stripe checkout
+          window.location.href = response.url;
+        } else {
+          toast.error(response.message || 'Failed to create checkout session');
+        }
+      } else {
+        // Handle regular roast
+        const response = await generateRoast(formData.name, formData.photoUrl);
+        
+        if (response.success && response.data && response.data.id) {
+          navigate(`/roast/${response.data.id}`);
+        } else {
+          toast.error('Failed to generate roast');
+        }
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <section className="max-w-4xl mx-auto mb-12 text-center">
@@ -95,7 +139,7 @@ const HomePage = () => {
         </p>
         
         <div className="mb-12">
-          <RoastForm />
+          <RoastForm onSubmit={handleSubmit} loading={loading} />
         </div>
       </section>
       
